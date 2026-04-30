@@ -1,5 +1,4 @@
 import axios from "axios";
-
 import type { CreateNotePayload, Note } from "../types/note";
 
 const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
@@ -12,7 +11,9 @@ const authHeader = {
 export interface FetchNotesParams {
   page?: number;
   search?: string;
+  tag?: string;
 }
+
 export interface FetchNotesResponse {
   notes: Note[];
   totalPages: number;
@@ -26,6 +27,7 @@ export const fetchNotes = async (
       perPage: 12,
       page: params.page ?? 1,
       ...(params.search && { search: params.search }),
+      ...(params.tag && { tag: params.tag }),
     },
     headers: authHeader,
   });
